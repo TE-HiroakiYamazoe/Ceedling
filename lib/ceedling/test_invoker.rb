@@ -48,12 +48,15 @@ class TestInvoker
         results_fail = @file_path_utils.form_fail_results_filepath( test )
         
         # add the definition value in the build option for the unit test
-        while TOOLS_TEST_COMPILER[:arguments][-1] =~ /^\-DTEST_[A-Z0-9_\-]+$/
-            puts("delete the previous added build option: #{TOOLS_TEST_COMPILER[:arguments][-1]}")
-            TOOLS_TEST_COMPILER[:arguments].delete_at(-1)
+        tools_compilers = {"for_unit_test" => TOOLS_TEST_COMPILER, "for_gcov" => TOOLS_GCOV_COMPILER}
+        for tools_compiler_key, tools_compiler_value in tools_compilers do
+            while tools_compiler_value[:arguments][-1] =~ /^\-DTEST_[A-Z0-9_\-]+$/
+                puts("delete the previous added build option: #{tools_compiler_value[:arguments][-1]} #{tools_compiler_key}")
+                tools_compiler_value[:arguments].delete_at(-1)
+            end
+            tools_compiler_value[:arguments].push("-D#{File.basename(test, ".*").strip.upcase}")
+            puts("add the definition value in the build option for the unit test: #{tools_compiler_value[:arguments][-1]} #{tools_compiler_key}")
         end
-        TOOLS_TEST_COMPILER[:arguments].push("-D#{File.basename(test, ".*").strip.upcase}")
-        puts("add the definition value in the build option for the unit test: #{TOOLS_TEST_COMPILER[:arguments][-1]}")
 
         # clean results files so we have a missing file with which to kick off rake's dependency rules
         @test_invoker_helper.clean_results( {:pass => results_pass, :fail => results_fail}, options )
