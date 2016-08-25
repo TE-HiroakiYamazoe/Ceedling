@@ -54,7 +54,7 @@ class TestInvoker
                 puts("delete the previous added build option: #{tools_compiler_value[:arguments][-1]} #{tools_compiler_key}")
                 tools_compiler_value[:arguments].delete_at(-1)
             end
-            tools_compiler_value[:arguments].push("-D#{File.basename(test, ".*").strip.upcase}")
+            tools_compiler_value[:arguments].push("-D#{File.basename(test, ".*").strip.upcase.sub(/@.*$/, "")}")
             puts("add the definition value in the build option for the unit test: #{tools_compiler_value[:arguments][-1]} #{tools_compiler_key}")
         end
 
