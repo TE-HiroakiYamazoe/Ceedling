@@ -4,11 +4,11 @@
 	branch = master
 [submodule "vendor/unity"]
 	path = vendor/unity
-	url = https://github.com/ThrowTheSwitch/Unity.git
-	branch = master
+	url = https://github.com/TE-HiroakiYamazoe/Unity.git
+	branch = test_features
 [submodule "vendor/cmock"]
 	path = vendor/cmock
-	url = https://github.com/ThrowTheSwitch/CMock.git     
+	url = https://github.com/ThrowTheSwitch/CMock.git
 	branch = master
 [submodule "plugins/fake_function_framework"]
 	path = plugins/fake_function_framework
